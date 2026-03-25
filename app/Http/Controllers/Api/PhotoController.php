@@ -74,7 +74,7 @@ class PhotoController extends Controller
 
         return response()->json([
             'success' => true,
-            'url' => $publicRelativeUrl,
+            'url' => '/public'. $publicRelativeUrl,
             'theme' => $themeMeta,
         ]);
     }
