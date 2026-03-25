@@ -1,0 +1,438 @@
+/* ------------------------------
+   1. Fonts
+------------------------------ */
+@font-face {
+    font-family: 'Helvetica';
+    src: url('/public/fonts/Helvetica.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Helvetica';
+    src: url('/public/fonts/Helvetica-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Helvetica';
+    src: url('/public/fonts/helvetica-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+/* ------------------------------
+   2. Root Variables & Base
+------------------------------ */
+:root {
+    --bg1: #2b0b2f;
+    --bg2: #3c0f44;
+    --accent: #ffe400;
+    --text: #ffffff;
+    --muted: rgba(255, 255, 255, 0.85);
+    --glass: rgba(255, 255, 255, 0.06);
+    --btn-glow: rgba(255, 228, 0, 0.12);
+    --radius: 12px;
+
+    font-family: 'Helvetica', Arial, sans-serif;
+}
+
+/*html, body {*/
+/*  height: 100%;*/
+/*  margin: 0;*/
+  /*background-color: var(--bg1); */
+  /*overscroll-behavior: none; */
+/*  -webkit-overflow-scrolling: touch;*/
+/*}*/
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  overscroll-behavior: none;
+  background-color: var(--bg1);
+}
+
+/* ------------------------------
+   3. Layout Wrappers
+------------------------------ */
+.screen {
+    max-width: 100%;
+    width: 100%;
+    min-height: 100vh;
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    background: url('/public/images/bg.png') no-repeat center center / cover;
+}
+
+.screen-overlay {
+    max-width: 100%;
+    width: 100%;
+    min-height: 100vh;
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    background: url('/public/images/overlay.png') no-repeat center center / cover;
+    background-size: 100% 100%;
+}
+
+.screen, .screen-overlay {
+  width: 100vw;       /* take full viewport width */
+  min-height: 100vh;
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  margin: 0;
+  padding: 0;
+}
+
+main.page {
+    flex: 1;
+    width: 100%;
+    padding: 36px 28px;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+.page {
+    display: none;
+    opacity: 0;
+    padding: 20px;
+    transition: opacity 0.4s ease-in-out;
+}
+
+.page.active {
+    display: block;
+    opacity: 1;
+}
+
+.page-flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+/* ------------------------------
+   4. Video Page
+------------------------------ */
+#page-video {
+    flex: 1;
+    width: 100%;
+    height: 100vh;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    overflow: hidden; /* Prevent scrollbars */
+}
+
+#page-video video {
+    width: 100%;
+    height: 100vh;
+    object-fit: fill;
+}
+
+#video-overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(0,0,0,0.55);
+    cursor: pointer;
+    z-index: 2;
+    transition: opacity 0.4s ease;
+}
+
+#video-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.overlay-content {
+    text-align: center;
+    color: white;
+}
+
+/* ------------------------------
+   5. Register Now Page
+------------------------------ */
+/*#page-register-now {*/
+/*    background-image: url('/public/images/clean.png');*/
+/*    background-repeat: no-repeat;*/
+/*    background-position: center;*/
+/*    background-size: cover;*/
+/*    color: #fff;*/
+/*    min-height: 100vh;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    flex-direction: column;*/
+    /*z-index: 1;*/
+/*}*/
+
+.register-now-btn {
+    background: transparent;
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+
+    padding: 50px 20px;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 20px;
+
+    backdrop-filter: blur(5px);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.register-now-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: scale(1.05);
+}
+
+/* ------------------------------
+   6. Typography
+------------------------------ */
+.yellow-title {
+    margin-top: 60px;
+
+    font-size: 34px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-align: center;
+
+    color: var(--accent);
+    text-shadow:
+        0 4px 8px rgba(0, 0, 0, 0.6),
+        0 0 14px rgba(255, 230, 0, 0.55),
+        0 0 28px rgba(255, 200, 0, 0.18);
+}
+
+.subtitle {
+    margin-bottom: 20px;
+    font-size: 18px;
+    text-align: center;
+    color: var(--muted);
+}
+
+/* ------------------------------
+   7. Form Elements
+------------------------------ */
+.form-row {
+    width: 100%;
+    margin: 18px 0;
+
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-bottom: 8px;
+    font-size: 15px;
+    color: var(--muted);
+}
+
+#page-register input[type="text"],
+#page-register input[type="email"],
+#page-register input[type="tel"] {
+    width: 90%;
+    padding: 10px 14px;
+    margin-bottom: 15px;
+
+    border: 1px solid white;
+    border-radius: 4px;
+
+    background: transparent;
+    color: white;
+    font-size: 14px;
+}
+
+input::placeholder {
+    color: rgba(255, 255, 255, 0.45);
+}
+
+.upload-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 110px;
+    text-align: center;
+}
+
+.muted-small {
+    margin-top: 10px;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.6);
+    text-align: center;
+}
+
+/* ------------------------------
+   8. Steps List
+------------------------------ */
+.steps {
+    margin: 14px 0 28px;
+    padding-left: 1em;
+
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--muted);
+}
+
+.steps li {
+    margin: 12px 0;
+}
+
+.highlight {
+    color: var(--accent);
+    font-weight: 700;
+}
+
+/* ------------------------------
+   9. Buttons
+------------------------------ */
+.btn {
+    display: inline-block;
+    margin: 20px auto 36px;
+    padding: 12px 30px;
+
+    border-radius: var(--radius);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+    box-shadow:
+        0 6px 18px rgba(0, 0, 0, 0.45),
+        0 0 30px var(--btn-glow);
+
+    color: var(--text);
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.55),
+        0 0 40px var(--btn-glow);
+}
+
+/*.bottom-btn {*/
+/*    position: fixed;*/
+/*    bottom: 20px;*/
+/*    left: 50%;*/
+/*    transform: translateX(-50%);*/
+/*    width: calc(100% - 40px);*/
+/*    text-align: center;*/
+/*}*/
+
+/*.bottom-btn {*/
+/*    position: relative;*/
+/*    bottom: auto;*/
+/*    left: auto;*/
+/*    transform: none;*/
+/*    width: 100%;*/
+/*    margin-top: 20px;*/
+/*    text-align: center;*/
+/*}*/
+/*form {*/
+/*  padding-bottom: calc(70px + env(safe-area-inset-bottom)); */
+/*}*/
+.bottom-btn {
+  position: relative;   
+  width: 100%;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.centered {
+    width: 100%;
+    text-align: center;
+}
+
+/*#register-form {*/
+/*  padding-bottom: calc(120px + env(safe-area-inset-bottom)); */
+/*}*/
+/* ------------------------------
+   10. Icons
+------------------------------ */
+.play-icon {
+    width: 64px;
+    height: 64px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    filter:
+        drop-shadow(0 0 8px rgba(255, 228, 0, 0.9))
+        drop-shadow(0 0 15px rgba(255, 228, 0, 0.6));
+    cursor: pointer;
+}
+
+/* ------------------------------
+   11. States
+------------------------------ */
+.input-error {
+    border: 2px solid red !important;
+}
+.error-message {
+    color: red;
+}
+
+@supports (-webkit-touch-callout: none) {
+  #page-register input {
+    font-size: 16px !important;
+  }
+}
+/* ------------------------------
+   12. Responsive
+------------------------------ */
+@media (min-width: 768px) {
+  #page-register form {
+    padding: 32px;
+    gap: 20px;
+  }
+
+  #page-register h2 {
+    font-size: 26px;
+  }
+
+  #page-register input,
+  #page-register button {
+    font-size: 18px;
+  }
+}
+@media (max-width: 480px) {
+    .play-icon {
+        width: 48px;
+        height: 48px;
+    }
+}
+
+@media (max-width: 420px) {
+    .title {
+        font-size: 30px;
+    }
+}
