@@ -18,6 +18,8 @@ Route::prefix('admin')->group(function () {
         Route::get('/users/export', [AdminController::class, 'exportUsers'])->name('admin.users.export');
         Route::get('/photo-uploads', [AdminController::class, 'photoUploads'])->name('admin.photo-uploads');
         Route::get('/photo-uploads/data', [AdminController::class, 'photoUploadsData'])->name('admin.photo-uploads.data');
+        Route::get('/votes', [AdminController::class, 'votes'])->name('admin.votes');
+        Route::get('/votes/data', [AdminController::class, 'votesData'])->name('admin.votes.data');
         Route::post('/logout', [AdminController::class, 'logout'])->name('admin.logout');
     });
 });

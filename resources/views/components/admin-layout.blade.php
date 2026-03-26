@@ -25,6 +25,7 @@
                             <x-admin-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')"> Dashboard</x-admin-nav-link>
                             <x-admin-nav-link :href="route('admin.users')" :active="request()->routeIs('admin.users')"> Users</x-admin-nav-link>
                             <x-admin-nav-link :href="route('admin.photo-uploads')" :active="request()->routeIs('admin.photo-uploads')"> Photo Uploads</x-admin-nav-link>
+                            <x-admin-nav-link :href="route('admin.votes')" :active="request()->routeIs('admin.votes')"> Votes</x-admin-nav-link>
                         </div>
                     </div>
                 </div>
@@ -74,6 +75,9 @@
                 </x-responsive-admin-nav-link>
                 <x-responsive-admin-nav-link :href="route('admin.photo-uploads')" :active="request()->routeIs('admin.photo-uploads')">
                     Photo Uploads
+                </x-responsive-admin-nav-link>
+                <x-responsive-admin-nav-link :href="route('admin.votes')" :active="request()->routeIs('admin.votes')">
+                    Votes
                 </x-responsive-admin-nav-link>
             </div>
             <div class="border-t border-gray-700 pb-3 pt-4">

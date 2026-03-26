@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Validation\ValidationException;
 use App\Models\PhotoUpload;
 use App\Models\User;
+use App\Models\Vote;
 use Yajra\DataTables\Facades\DataTables;
 
 class AdminController extends Controller
@@ -51,6 +52,7 @@ class AdminController extends Controller
         // Get the total number of users
         $userCount = User::where('role', 'user')->count();
         $photoUploadCount = PhotoUpload::count();
+        $voteCount = Vote::count();
 
         // Get the average ratings
         // $averageAroma = 0;
@@ -61,6 +63,7 @@ class AdminController extends Controller
         return view('dashboard', compact(
             'userCount',
             'photoUploadCount',
+            'voteCount',
             // 'averageAroma',
             // 'averageTaste',
             // 'averageSmoothness',
@@ -117,6 +120,49 @@ class AdminController extends Controller
             ->addColumn('image_preview', fn (PhotoUpload $upload) => '<img src="'.e($upload->image_url).'" alt="Upload" class="h-16 w-16 rounded object-cover" />')
             ->addColumn('image_link', fn (PhotoUpload $upload) => '<a href="'.e($upload->image_url).'" target="_blank" class="text-indigo-600 hover:text-indigo-500">Open</a>')
             ->rawColumns(['image_preview', 'image_link'])
+            ->make(true);
+    }
+
+    /**
+     * Show vote records with per-shop totals.
+     */
+    public function votes()
+    {
+        $configuredShops = config('voting.shops', []);
+        $dbCounts = Vote::query()
+            ->selectRaw('shop_id, shop_name, COUNT(*) as total_votes')
+            ->groupBy('shop_id', 'shop_name')
+            ->orderByDesc('total_votes')
+            ->get()
+            ->keyBy('shop_id');
+
+        $shopVoteCounts = collect($configuredShops)
+            ->map(function (array $shop, int $shopId) use ($dbCounts) {
+                $row = $dbCounts->get($shopId);
+
+                return [
+                    'shop_id' => $shopId,
+                    'shop_name' => $shop['name'],
+                    'shop_name_bn' => $shop['name_bn'] ?? null,
+                    'total_votes' => $row ? (int) $row->total_votes : 0,
+                ];
+            })
+            ->sortByDesc('total_votes')
+            ->values();
+
+        return view('votes', [
+            'shopVoteCounts' => $shopVoteCounts,
+        ]);
+    }
+
+    /**
+     * Data endpoint for vote list.
+     */
+    public function votesData()
+    {
+        $votes = Vote::query()->latest('id');
+
+        return DataTables::eloquent($votes)
             ->make(true);
     }
 
